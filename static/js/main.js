@@ -12,7 +12,7 @@ class App extends EventTarget {
         this.onFileLoadEvent = new Event("onFileLoad");
         this.controllToolbar = document.querySelector("#control-toolbar");
 
-        this.playerResizeObserver = new ResizeObserver(function (entries) {
+        this.playerResizeObserver = new ResizeObserver(function(entries) {
             for (let entry of entries) {
                 entry.target.resizeArea();
             }
@@ -20,12 +20,12 @@ class App extends EventTarget {
 
         this.initPlayer();
 
-        screen.orientation.addEventListener('change', (function (e) {
+        screen.orientation.addEventListener('change', (function(e) {
             let scrOrientation = e.target;
             this.fullscreen(!(scrOrientation.type.indexOf("portrait") != -1));
         }).bind(this));
 
-        window.addEventListener("visibilitychange", (function (e) {
+        window.addEventListener("visibilitychange", (function(e) {
             if (!document.hidden) {
                 this.wakeLocking();
             }
@@ -59,13 +59,13 @@ class App extends EventTarget {
                 if (this.metadata) {
                     let w = this.metadata.width;
                     let h = this.metadata.height;
-                    let coef = h/w;
+                    let coef = h / w;
                     this.style.height = `${Math.round(this.clientWidth*coef)}px`;
                 }
             }
             this.player.className = "bg-dark bg-gradient";
 
-            this.player.addEventListener("loadedmetadata", function (e) {
+            this.player.addEventListener("loadedmetadata", function(e) {
                 e.target.resizeArea();
             });
 
@@ -133,13 +133,13 @@ window.app.addEventListener("onFileLoad", (e) => {
 });
 
 window.itemList = document.querySelector("#i-list");
-window.itemList.addEventListener("onActive", function (e) {
+window.itemList.addEventListener("onActive", function(e) {
     app.loadFile(e.target.activeItem);
 });
 
 document.querySelector("#i-local-file").addEventListener("change", function(event) {
     if (event.target.files.length > 0) {
-        itemList.setData(event.target.files, item => {return item.name;});
+        itemList.setData(event.target.files, item => { return item.name; });
         itemList.setActive(0);
     }
 });
